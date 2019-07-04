@@ -1,0 +1,22 @@
+pipeline{
+    agent{ label 'master' }
+    stages{
+        stage('Git Checkout'){
+            steps{
+                script{
+                    git credentialsId: 'git', url: 'https://github.com/madhu444/game-of-life.git'
+                }
+            }
+        }
+        
+        stage('Maven compile'){
+            steps{
+                script{
+                    withMaven(jdk: 'jdk8', maven: 'mavn2'){
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+    }
+}
